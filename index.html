@@ -16,7 +16,7 @@
             <a href="#menu">เมนูของเรา</a>
             <a href="#about">เกี่ยวกับเรา</a>
         </nav>
-        <a href="#order" class="btn-primary">สั่งเลย</a>
+        <button onclick="openBookingModal()" class="btn-primary">จองโต๊ะ</button>
     </header>
 
     <section id="home" class="hero">
@@ -77,13 +77,97 @@
 
     <section id="order" class="cta-section">
         <h2>พร้อมรับความอบอุ่นแล้วหรือยัง?</h2>
-        <p>สั่งล่วงหน้าผ่านเว็บไซต์ รับโปรโมชั่นพิเศษทันที</p>
-        <button class="btn-primary btn-large">สั่งซื้อออนไลน์</button>
+        <p>สั่งล่วงหน้าผ่านเว็บไซต์ หรือจองโต๊ะเพื่อรับประสบการณ์ที่ดีที่สุด</p>
+        <button onclick="openBookingModal()" class="btn-primary btn-large">จองโต๊ะล่วงหน้า</button>
     </section>
 
     <footer>
         <p>&copy; 2026 Cozy Beans Coffee Shop. All rights reserved.</p>
     </footer>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeBookingModal()">&times;</span>
+            <div id="bookingFormContainer">
+                <h2>ระบุรายละเอียดการจองโต๊ะ</h2>
+                <form id="bookingForm" onsubmit="submitBooking(event)">
+                    <div class="form-group">
+                        <label for="b-date">วันที่</label>
+                        <input type="date" id="b-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-time">เวลา</label>
+                        <input type="time" id="b-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-guests">จำนวนคน</label>
+                        <select id="b-guests" required>
+                            <option value="1">1 คน</option>
+                            <option value="2">2 คน</option>
+                            <option value="3">3 คน</option>
+                            <option value="4">4 คน</option>
+                            <option value="5+">5 คนขึ้นไป</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>โซนที่นั่ง</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="b-zone" value="Indoor" checked> Indoor</label>
+                            <label><input type="radio" name="b-zone" value="Outdoor"> Outdoor</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-name">ชื่อผู้จอง</label>
+                        <input type="text" id="b-name" placeholder="ชื่อ-นามสกุล" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-phone">เบอร์โทรศัพท์</label>
+                        <input type="tel" id="b-phone" placeholder="08X-XXX-XXXX" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-large" style="width: 100%; margin-top: 1rem;">ยืนยันการจอง</button>
+                </form>
+            </div>
+            
+            <div id="bookingSuccessContainer" style="display: none; text-align: center; padding: 2rem 0;">
+                <h2 style="color: var(--accent-color); font-size: 2rem; margin-bottom: 1rem;">✅ จองสำเร็จ!</h2>
+                <p>คำขอจองโต๊ะของคุณถูกส่งไปยังร้านแล้ว<br>สถานะ: <strong>รอดำเนินการ</strong></p>
+                <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">พนักงานจะติดต่อกลับเพื่อยืนยันอีกครั้ง</p>
+                <button onclick="closeBookingModal()" class="btn-secondary" style="margin-top: 2rem;">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("bookingModal");
+        const formContainer = document.getElementById("bookingFormContainer");
+        const successContainer = document.getElementById("bookingSuccessContainer");
+        const form = document.getElementById("bookingForm");
+
+        function openBookingModal() {
+            modal.style.display = "flex";
+            formContainer.style.display = "block";
+            successContainer.style.display = "none";
+            form.reset();
+        }
+
+        function closeBookingModal() {
+            modal.style.display = "none";
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            // Simulate API call or form submission
+            formContainer.style.display = "none";
+            successContainer.style.display = "block";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeBookingModal();
+            }
+        }
+    </script>
 </body>
 </html>
